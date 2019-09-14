@@ -24,6 +24,7 @@ async def on_message(message):
         return
 
     await reply.checkIm(message)
+    await reply.checkWalter(message)
 
     # record the messages sent
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "\t" + str(message.author) + ":\t" + message.content)
