@@ -1,34 +1,34 @@
 from discord.ext import commands
+import reply
+import json
 import discord
-import time
-import swear
+from datetime import datetime
+from time import gmtime, strftime
 from threading import Timer
 
+bot = commands.Bot(command_prefix="-")
 
-client = discord.Client()
-
-offenseCount = {}
-
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print('We have logged in as {0.user}'.format(bot))
 
-@client.event
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send("pong!")
+
+
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
-    print(message.author)
+    await reply.checkIm(message)
 
-    if(swear.isSwear(message.content)):
-        if(message.author not in offenseCount):
-            offenseCount[message.author] = 0
-        offenseCount[message.author] += 1
+    # record the messages sent
+    print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "\t" + str(message.author) + ":\t" + message.content)
 
-        if(offenseCount[message.author] == 1):
-            await message.channel.send("**First Offense.** WARNING")
-        elif(offenseCount[message.author] >= 2):
-            await message.channel.send("**Second Offense.** KICKED")
-            await message.guild.kick(message.guild.members[3])
+    await bot.process_commands(message)
 
-client.run("NjE1MDY3ODkyODQ4Nzg3NDU5.XWIozg.AtR6uSGEcmDiNHHYd1pw-hoM2as")
+configData = json.loads(open("config.json", "r").read())
+bot.run(configData["bot_token"])
