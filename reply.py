@@ -12,6 +12,7 @@ async def checkIm(message):
             else:
                 sendStr += "walter!"
             await message.channel.send(sendStr)
+            break
 
 
 async def checkWalter(message):
