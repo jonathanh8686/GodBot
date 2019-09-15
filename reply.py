@@ -6,7 +6,7 @@ async def checkIm(message):
     for form in imforms:
         nm = message.content.lower()
         if((form + " ") in nm):
-            sendStr = "Hi " + message.content[(nm.find(" " + form + " ") + len(form) + 2):] + " I'm "
+            sendStr = "Hi " + message.content[(nm.find(form + " ") + len(form) + 2):] + " I'm "
             if(random.random() <= 0.05):
                 sendStr += "Walter!"
             else:
