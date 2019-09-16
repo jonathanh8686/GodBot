@@ -9,10 +9,11 @@ async def checkIm(message):
 
         if(nm.startswith(form)):
             stind = 0
-        else:
+        elif(" " + form + " " in nm):
             stind = nm.find(" " + form + " ") + 1
 
-        if((form + " ") in nm):
+        if((form + " ") in nm and stind >= 0):
+            print(stind)
             sendStr = "Hi " + message.content[(stind + len(form) + 1):] + " I'm "
             if(random.random() <= 0.05):
                 sendStr += "Walter!"
