@@ -5,14 +5,15 @@ imforms = ["i am", "i'm", "i a m", "i ' m", "i m", "im"]
 async def checkIm(message):
     for form in imforms:
         nm = message.content.lower()
+        nm = nm.replace("\n", " ")
         stind = -1
 
-        if(nm.startswith(form)):
+        if(nm.startswith(form + " ")):
             stind = 0
         elif(" " + form + " " in nm):
             stind = nm.find(" " + form + " ") + 1
 
-        if((form + " ") in nm and stind >= 0):
+        if(stind >= 0 and nm[stind:+stind+len(form) + 1] == form + " "):
             print(stind)
             sendStr = "Hi " + message.content[(stind + len(form) + 1):] + " I'm "
             if(random.random() <= 0.05):
